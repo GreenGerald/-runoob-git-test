@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+int n=4;
+int *x;
+bool Place(int k){//判断k位置能不能放_约束条件
+	bool place=true;
+	for(int j=1;j<=k-1;j++)
+		if(abs(k-j)==abs(x[j]-x[k])||abs(x[j]==x[k]))
+			place= false;
+	return place;
+}
+void print(int x[],int n){
+	for(int i=1;i<=n;i++)
+		cout<<x[i]<<"  ";
+	cout<<endl;
+}
+void put(int k){
+	for(int i=1;i<=n;i++)//探索第k行从第1格开始放皇后
+	{
+		x[k]=i;	
+		if(Place(k)==1)  // 若第k行从第i格可以放，则检测是否满n行
+		{   //如果flag==0,返回调用put(k)_回溯点
+			if(k==n)//若已满足规模，则打印一个解
+				print(x,n);
+			else
+				put(k+1);//放到下一个位置再试
+		}
+	}
+}
+void main( )
+{
+	cout<<"输入皇后数量：";
+	cin>>n;
+	x=new int[n];
+	put(1);
+	delete[] x;
+}
